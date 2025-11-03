@@ -1,5 +1,5 @@
 package main
-
+Залупа
 import (
 	"Third/todo"
 	"bufio"
