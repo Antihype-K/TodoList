@@ -3,8 +3,7 @@ package todo
 import (
 	"fmt"
 	"time"
-
-	"github.com/k0kubun/pp"
+	// "github.com/k0kubun/pp"
 )
 
 type Task struct {
@@ -90,13 +89,26 @@ func (t *TodoManager) CompleteTask(taskName string) bool {
 }
 
 func (t *TodoManager) PullTasks() {
+	for i, task := range t.Tasks {
+		fmt.Println(i+1, "-", task)
+	}
 	event := Event{
 		TimeMessage:       time.Now().Format("02.01.2006 15:04"),
 		Command:           "list",
-		DescriptionEvents: pp.Sprintf("Список задач: %v\n", t.Tasks),
+		DescriptionEvents: fmt.Sprintln("Запрошен список задач"),
 	}
+	t.Events = append(t.Events, event)
 }
 
 func (t *TodoManager) PullEvents() {
-	fmt.Println(t.Events)
+	for i, event := range t.Events {
+		fmt.Println(i+1, "-", event)
+	}
+	event := Event{
+		TimeMessage:       time.Now().Format("02.01.2006 15:04"),
+		Command:           "events",
+		DescriptionEvents: fmt.Sprintln("Запрошен список событий"),
+	}
+	t.Events = append(t.Events, event)
+
 }
