@@ -3,6 +3,8 @@ package todo
 import (
 	"fmt"
 	"time"
+
+	"github.com/k0kubun/pp"
 )
 
 type Task struct {
@@ -85,4 +87,16 @@ func (t *TodoManager) CompleteTask(taskName string) bool {
 	}
 	fmt.Println("Задача с таким названием не найдена")
 	return false
+}
+
+func (t *TodoManager) PullTasks() {
+	event := Event{
+		TimeMessage:       time.Now().Format("02.01.2006 15:04"),
+		Command:           "list",
+		DescriptionEvents: pp.Sprintf("Список задач: %v\n", t.Tasks),
+	}
+}
+
+func (t *TodoManager) PullEvents() {
+	fmt.Println(t.Events)
 }
