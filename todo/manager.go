@@ -44,8 +44,8 @@ func (t *TodoManager) AddTask(taskName string, taskDescription string) {
 
 	event := Event{
 		TimeMessage:       time.Now().Format("02.01.2006 15:04"),
-		Command:           "Добавить",
-		DescriptionEvents: taskDescription,
+		Command:           "add",
+		DescriptionEvents: fmt.Sprintf("Задача %v была добавлена", taskName),
 	}
 	t.Events = append(t.Events, event)
 }
@@ -57,11 +57,13 @@ func (t *TodoManager) DeleteTask(taskName string) bool {
 
 			event := Event{
 				TimeMessage:       time.Now().Format("02.01.2006 15:04"),
-				Command:           "Удалить",
-				DescriptionEvents: fmt.Sprintf("Задача %v успешно удалена", taskName),
+				Command:           "dell",
+				DescriptionEvents: fmt.Sprintf("Задача %v была удалена", taskName),
 			}
 			t.Events = append(t.Events, event)
 			return true
+		} else {
+			fmt.Println("Такой задачи не существует, обратитесь к команде list или проверьте корректность написания задачи")
 		}
 
 	}
@@ -76,7 +78,7 @@ func (t *TodoManager) CompleteTask(taskName string) bool {
 
 			event := Event{
 				TimeMessage:       time.Now().Format("02.01.2006 15:04"),
-				Command:           "Выполнено",
+				Command:           "done",
 				DescriptionEvents: fmt.Sprintf("Задача %v успешно выполнена!", taskName),
 			}
 			t.Events = append(t.Events, event)
