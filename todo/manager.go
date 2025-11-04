@@ -2,8 +2,10 @@ package todo
 
 import (
 	"fmt"
+	"os"
 	"time"
-	// "github.com/k0kubun/pp"
+
+	"github.com/k0kubun/pp"
 )
 
 type Task struct {
@@ -92,7 +94,7 @@ func (t *TodoManager) CompleteTask(taskName string) bool {
 
 func (t *TodoManager) PullTasks() {
 	for i, task := range t.Tasks {
-		fmt.Println(i+1, "-", task)
+		pp.Println(i+1, "-", task)
 	}
 	event := Event{
 		TimeMessage:       time.Now().Format("02.01.2006 15:04"),
@@ -113,4 +115,10 @@ func (t *TodoManager) PullEvents() {
 	}
 	t.Events = append(t.Events, event)
 
+}
+
+func LogCommand(cmd string) {
+	f, _ := os.OpenFile("commands.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	f.WriteString(time.Now().Format("15:04:05") + " " + cmd + "\n")
+	f.Close()
 }
